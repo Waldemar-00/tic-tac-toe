@@ -25,3 +25,7 @@
   font-weight: bold;
   color: #535353;
 }
+#num {
+  width: 100px;
+  margin: 0 0 20px 0;
+}
