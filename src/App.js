@@ -9,14 +9,11 @@ function App() {
   function handleArray(n) {
     setNum(num => num + n)
     changeStyles()
-    setArray(() => {
-      const arr = []
-      console.log(num)
-      for (let i = 0; i < num ** 2; i++) {
-        arr.push(<Square key={v4()} />)
-      }
-      return [...arr]
-    })
+    const arr = []
+    for (let i = 0; i < num ** 2; i++) {
+      arr.push(<Square key={v4()} />)
+    }
+    setArray(arr)
   }
   function changeStyles() {
     console.log(num)
