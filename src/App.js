@@ -4,43 +4,40 @@ import { useState } from 'react'
 import {v4} from 'uuid'
 function App() {
   const [num, setNum] = useState(3)
-  const [array, setArray] = useState(() => {
-    const array = []
-    for (let i = 0; i < num; i++) {
-      array.push(<Square key={v4()} />)
-    }
-    return array
-  })
-  function handleArray(e) {
-    changeNum(e)
-    setArray(array => {
+  const [string, setString] = useState('')
+  const [array, setArray] = useState()
+  function handleArray(n) {
+    setNum(num => num + n)
+    changeStyles()
+    setArray(() => {
       const arr = []
-      for (let i = 0; i < 3; i++) {
-        if (array.length === num) return [...array]
+      console.log(num)
+      for (let i = 0; i < num ** 2; i++) {
         arr.push(<Square key={v4()} />)
       }
-      return [...array, ...arr]
+      return [...arr]
     })
   }
-  function changeNum(e) {
-    setNum(e.target.value)
+  function changeStyles() {
+    console.log(num)
+    let str = ''
+    for (let i = 0; i < num; i++) {
+      str = str + '36px '
+    }
+    setString(str)
   }
   return (
     <div className="App">
       <header className="App-header">
         <h1>TIC-TAC-TOE</h1>
-        <label htmlFor='num'></label>
-        <input id='num' type='number' step='3' min='3' max='12' onChange={ handleArray }/>
-        <div>
-          {array}
-        </div>
-        <div>
-          {array}
-        </div>
-        <div>
-          {array}
-        </div>
+        <button className="btn" onClick={() => handleArray(3)}>more</button>
+        <button className="btn" onClick={() => handleArray(-3)}>less</button>
       </header>
+      <main className='wrap'>
+        <div  className='grid' style={{gridTemplateRows: `${string}`, gridTemplateColumns: `${string}` }}>
+          {array}
+        </div>
+      </main>
     </div>
   )   
 }
