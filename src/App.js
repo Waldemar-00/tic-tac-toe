@@ -17,9 +17,10 @@ function App() {
     setString(str)
   }, [num])
   const onSquareClick = useCallback((i) => {
+    if(square[i]) return
     isX ? setSquare(square => [...square, square[i] = 'X']) : setSquare(square => [...square, square[i] = 'O'])
     setIsX(!isX)
-    }, [isX]
+    }, [isX, square]
   )
   const handleArray = useCallback(() => {
     changeStyles()
