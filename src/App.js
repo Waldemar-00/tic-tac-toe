@@ -7,6 +7,7 @@ function App() {
   const [string, setString] = useState('')
   const [array, setArray] = useState([])
   const [square, setSquare] = useState([])
+  const [isX, setIsX] = useState(true)
   const memo = useMemo(() => Array((num ** 2)).fill(null), [num])
   const changeStyles = useCallback(() => {
     let str = ''
@@ -15,9 +16,10 @@ function App() {
     }
     setString(str)
   }, [num])
-  const onSquareClick = useCallback((i) =>{
-    setSquare(square => [...square, square[i] = 'X'])
-    }, []
+  const onSquareClick = useCallback((i) => {
+    isX ? setSquare(square => [...square, square[i] = 'X']) : setSquare(square => [...square, square[i] = 'O'])
+    setIsX(!isX)
+    }, [isX]
   )
   const handleArray = useCallback(() => {
     changeStyles()
