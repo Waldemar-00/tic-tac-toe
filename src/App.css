@@ -52,3 +52,11 @@
   background-color: #282c34;
   place-content: center;
 }
+footer {
+  width: 1200px;
+  margin: 50px auto;
+  background-color: deepskyblue;
+  font-size: 48px;
+  font-weight: bold;
+  color: #242424;
+}

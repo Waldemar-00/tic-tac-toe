@@ -8,6 +8,7 @@ function App() {
   const [array, setArray] = useState([])
   const [square, setSquare] = useState([])
   const [isX, setIsX] = useState(true)
+  const [winner, setWinner] = useState(null)
   const memo = useMemo(() => Array((num ** 2)).fill(null), [num])
   const changeStyles = useCallback(() => {
     let str = ''
@@ -37,12 +38,27 @@ function App() {
   function changeNum(n) {
     setNum(num => num + n)
   }
+  const calcWinner = useCallback(() => {
+    const lines = [
+      [0, 1, 2], [3, 4, 5], [6, 7, 8], 
+      [0, 3, 6], [1, 4, 7], [2, 5, 8],
+      [0, 4, 8], [2, 4, 6]
+    ];
+    for (let i = 0; i < lines.length; i++) {
+      const [a, b, c] = lines[i]
+      if (square[a] === square[b] && square[b] === square[c]) {
+        return  setWinner(square[a])
+      }
+    }
+    return null
+  }, [square])
   useEffect(() => {
     handleArray()
     changeStyles()
     setSquare(memo)
+    calcWinner()
     console.log(square)
-  }, [num, handleArray, changeStyles, square, memo])
+  }, [num, handleArray, changeStyles, square, memo, calcWinner])
   return (
     <div className="App">
       <header className="App-header">
@@ -55,6 +71,7 @@ function App() {
           {array}
         </div>
       </main>
+      <footer> {winner ? <div>WINNER: {winner} </div> : null}</footer>
     </div>
   )   
 }
