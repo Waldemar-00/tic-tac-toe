@@ -9,6 +9,8 @@ function App() {
   const [square, setSquare] = useState([])
   const [isX, setIsX] = useState(true)
   const [winner, setWinner] = useState(null)
+  const [arrX, setArrX] = useState([])
+  const [arrO, setArrO] = useState([])
   const memo = useMemo(() => Array((num ** 2)).fill(null), [num])
   const changeStyles = useCallback(() => {
     let str = ''
@@ -52,13 +54,32 @@ function App() {
     }
     return null
   }, [square])
+  const makeHistoryX = useCallback(
+    () => {
+      const array = square.slice()
+      const ar = array.map((item, index) => {
+        return item === 'X' ? index + 1 : null
+      })
+      setArrX(ar)
+    }, [square]
+  )
+  const makeHistoryO = useCallback(
+  () => {
+    const array = square.slice()
+    const ar = array.map((item, index) => {
+      return item === 'O' ? index + 1 : null
+    })
+    setArrO(ar)
+  }, [square]
+)
   useEffect(() => {
     handleArray()
     changeStyles()
     setSquare(memo)
     calcWinner()
-    console.log(square)
-  }, [num, handleArray, changeStyles, square, memo, calcWinner])
+    makeHistoryX()
+    makeHistoryO()
+  }, [num, handleArray, changeStyles, square, memo, calcWinner, makeHistoryX, makeHistoryO])
   return (
     <div className="App">
       <header className="App-header">
@@ -71,6 +92,18 @@ function App() {
           {array}
         </div>
       </main>
+      <section className='historyX'>
+        <ul className="X">
+          history X
+          {arrX.map((item) => <li key={v4()}>{item}</li>)}
+        </ul>
+      </section>
+      <section className='historyO'>
+        <ul className="O">
+          history O
+          {arrO.map((item) => <li key={v4()}>{item}</li>)}
+        </ul>
+      </section>
       <footer> {winner ? <div>WINNER: {winner} </div> : null}</footer>
     </div>
   )   
