@@ -58,7 +58,7 @@ function App() {
     () => {
       const array = square.slice()
       const ar = array.map((item, index) => {
-        return item === 'X' ? index + 1 : null
+        return item === 'X' ? `step to square - ${index + 1}` : null
       })
       setArrX(ar)
     }, [square]
@@ -67,7 +67,7 @@ function App() {
   () => {
     const array = square.slice()
     const ar = array.map((item, index) => {
-      return item === 'O' ? index + 1 : null
+      return item === 'O' ? `step to square - ${index + 1}` : null
     })
     setArrO(ar)
   }, [square]
@@ -94,13 +94,13 @@ function App() {
       </main>
       <section className='historyX'>
         <ul className="X">
-          history X
+          Stride of X player
           {arrX.map((item) => <li key={v4()}>{item}</li>)}
         </ul>
       </section>
       <section className='historyO'>
         <ul className="O">
-          history O
+          Stride of O player
           {arrO.map((item) => <li key={v4()}>{item}</li>)}
         </ul>
       </section>

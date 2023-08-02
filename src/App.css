@@ -54,21 +54,29 @@
 }
 .historyX {
   position: absolute;
-  left: 20px;
-  top: 250px;
+  left: 38px;
+  top: 300px;
+  font-size: 24px;
+  font-weight: 500;
 }
 .historyO {
   position: absolute;
   right: 80px;
-  top: 250px;
+  top: 300px;
+  font-size: 24px;
+  font-weight: 500;
 }
-.X {
-  list-style: none;
-  text-align: left;
-}
-.O {
+.X, .O {
   list-style: none;
   text-align: right;
+}
+.O li {
+  margin-top: 10px;
+}
+.X li, .O li {
+  font-size: 18px;
+  color: #242424;
+  font-weight: 450;
 }
 footer {
   width: 1200px;
