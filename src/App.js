@@ -54,32 +54,31 @@ function App() {
     }
     return null
   }, [square])
-  const makeHistoryX = useCallback(
+  const makeHistory = useCallback(
     () => {
       const array = square.slice()
-      const ar = array.map((item, index) => {
+      const arX = array.map((item, index) => {
         return item === 'X' ? `step to square - ${index + 1}` : null
       })
-      setArrX(ar)
+      const arO = array.map((item, index) => {
+        return item === 'O' ? `step to square - ${index + 1}` : null
+      })
+      setArrO(arO)
+      setArrX(arX)
     }, [square]
   )
-  const makeHistoryO = useCallback(
-  () => {
-    const array = square.slice()
-    const ar = array.map((item, index) => {
-      return item === 'O' ? `step to square - ${index + 1}` : null
-    })
-    setArrO(ar)
-  }, [square]
-)
+  const returnHistory = useCallback((e) => {
+    // const array = square.slice()
+    const index = e.target.innerHTML.match(/\d/g).join('')
+    console.log(index)
+  }, [])
   useEffect(() => {
     handleArray()
     changeStyles()
     setSquare(memo)
     calcWinner()
-    makeHistoryX()
-    makeHistoryO()
-  }, [num, handleArray, changeStyles, square, memo, calcWinner, makeHistoryX, makeHistoryO])
+    makeHistory()
+  }, [num, handleArray, changeStyles, square, memo, calcWinner, makeHistory])
   return (
     <div className="App">
       <header className="App-header">
@@ -95,13 +94,13 @@ function App() {
       <section className='historyX'>
         <ul className="X">
           Stride of X player
-          {arrX.map((item) => <li key={v4()}>{item}</li>)}
+          {arrX.map((item) => <li key={v4()} onClick={(e) => returnHistory(e)}>{item}</li>)}
         </ul>
       </section>
       <section className='historyO'>
         <ul className="O">
           Stride of O player
-          {arrO.map((item) => <li key={v4()}>{item}</li>)}
+          {arrO.map((item) => <li key={v4()}  onClick={(e) => returnHistory(e)}>{item}</li>)}
         </ul>
       </section>
       <footer> {winner ? <div>WINNER: {winner} </div> : null}</footer>
