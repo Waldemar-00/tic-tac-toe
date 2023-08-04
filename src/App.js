@@ -11,6 +11,7 @@ function App() {
   const [winner, setWinner] = useState(null)
   const [arrX, setArrX] = useState([])
   const [arrO, setArrO] = useState([])
+  const [history, setHistory] = useState([])
   const memo = useMemo(() => Array((num ** 2)).fill(null), [num])
   const changeStyles = useCallback(() => {
     let str = ''
@@ -22,8 +23,9 @@ function App() {
   const onSquareClick = useCallback((i) => {
     if(square[i]) return
     isX ? setSquare(square => [...square, square[i] = 'X']) : setSquare(square => [...square, square[i] = 'O'])
+    setHistory([...history,[...square]])
     setIsX(!isX)
-    }, [isX, square]
+    }, [isX, square, history]
   )
   const handleArray = useCallback(
     (history) => {
@@ -32,6 +34,7 @@ function App() {
       for (let i = 0; i < num ** 2; i++) {
         arr.push(<Square
                     key={v4()}
+                    id={i}
                     value={history ? history[i] : square[i]} 
                     onSquareClick={() => onSquareClick(i)}
                     />)
@@ -73,7 +76,7 @@ function App() {
   )
   const returnHistory = useCallback((e) => {
     const array = square.slice()
-    const index = e.target.innerHTML.match(/\d/g).join('')
+    const index = e.target.innerHTML.match(/\d/g).join('') //!id
     const ar = array.slice(0, index)
     makeHistory(ar)
   }, [square, makeHistory])
@@ -83,7 +86,8 @@ function App() {
     setSquare(memo)
     calcWinner()
     makeHistory()
-  }, [num, handleArray, changeStyles, square, memo, calcWinner, makeHistory])
+    console.log(history)
+  }, [num, handleArray, changeStyles, square, memo, calcWinner, makeHistory, history])
   return (
     <div className="App">
       <header className="App-header">
