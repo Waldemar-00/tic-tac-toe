@@ -1,64 +1,48 @@
-import './App.css'   
-import Square from './gameApp/GameApp'
-import { useState, useEffect, useCallback, useMemo } from 'react'
-import {v4} from 'uuid'
+import './AppShort.css'
+import Square from './gameApp/ShortGame'
+import { useState, useEffect, useCallback } from 'react'
+import { v4 } from 'uuid'
 function App() {
-  const [num, setNum] = useState(0) //? determined quantity of squares
-  const [string, setString] = useState('') //? determined grid styles
   const [array, setArray] = useState([]) //? displays elements 
-  const [square, setSquare] = useState([]) //? displays 'X' or 'O'
+  const [square, setSquare] = useState(Array(9).fill(null)) //? displays 'X' or 'O'
   const [isX, setIsX] = useState(true) // ? its flag of 'X' or 'O'
   const [winner, setWinner] = useState(null) //? print winner
   const [arrX, setArrX] = useState([]) //? for print history on display of 'X' steps
   const [arrO, setArrO] = useState([]) //? for print history on display of 'O' steps
-  // const [historyBack, setHistoryBack] = useState([]) //? history the returning of steps
-  const memo = useMemo(() => Array((num ** 2)).fill(null), [num]) //? layout of squares
-  //! changeStyles
-  const changeStyles = useCallback(() => {
-    let str = ''
-    for (let i = 0; i < num; i++) {
-      str = str + '36px '
-    }
-    setString(str)
-  }, [num])
+  const [back, setBack] = useState([]) //? for print history on display 
+
   //! onSquareClick
   const onSquareClick = useCallback((i) => {
-    if(square[i]) return
-    isX ? setSquare(square => [ square[i] = 'X' ]) : setSquare(square => [ square[i] = 'O' ])
-    // setHistoryBack([...square])
+    if (square[i]) return
+    isX ? setSquare(square => [...square, square[i] = 'X']) : setSquare(square => [...square, square[i] = 'O'])
     setIsX(!isX)
-    }, [isX, square]
+  }, [isX, square]
   )
-    //! handleArray
+  //! handleArray
   const handleArray = useCallback(
-    (history) => {
-      changeStyles()
+    (array = [...square]) => {
+      if(back.length > 0) array = [...back]
       const arr = []
-      for (let i = 0; i < num ** 2; i++) {
+      for (let i = 0; i < 9; i++) {
         arr.push(<Square
-                    key={v4()}
-                    id={i}
-                    value={history ? history[i] : square[i]} 
-                    onSquareClick={() => onSquareClick(i)}
-                    />)
+          key={v4()}
+          value={array[i]}
+          onSquareClick={() => onSquareClick(i)}
+        />)
       }
       setArray(arr)
-    }, [num, changeStyles, square, onSquareClick])
-  //! changeNum
-  function changeNum(n) {
-    setNum(num => num + n)
-  }
+    }, [square, onSquareClick, back])
   //! calcWinner
   const calcWinner = useCallback(() => {
     const lines = [
-      [0, 1, 2], [3, 4, 5], [6, 7, 8], 
+      [0, 1, 2], [3, 4, 5], [6, 7, 8],
       [0, 3, 6], [1, 4, 7], [2, 5, 8],
       [0, 4, 8], [2, 4, 6]
     ];
     for (let i = 0; i < lines.length; i++) {
       const [a, b, c] = lines[i]
       if (square[a] === square[b] && square[b] === square[c]) {
-        return  setWinner(square[a])
+        return setWinner(square[a])
       }
     }
     return null
@@ -82,28 +66,25 @@ function App() {
     const array = square.slice()
     const index = e.target.innerHTML.match(/\d/g).join('') //!id
     const ar = array.slice(0, index)
-    setSquare([...ar, ...Array(9 - index).fill(null)])
     makeHistory([...ar, ...Array(9 - index).fill(null)])
+    setBack([...ar, ...Array(9 - index).fill(null)])
   }, [square, makeHistory])
   //! useEffect
   useEffect(() => {
-    changeStyles()
     handleArray()
-    setSquare(memo)
     calcWinner()
     makeHistory()
-    // console.log(square, 'returnHistory')
-  }, [num, handleArray, changeStyles, memo, calcWinner, makeHistory])
+  }, [handleArray, calcWinner, makeHistory ])
   //! RETURN
   return (
     <div className="App">
       <header className="App-header">
         <h1>TIC-TAC-TOE</h1>
-        <button className="btn" onClick={() => changeNum(3)}>more</button>
-        <button className="btn" onClick={() => changeNum(-3)}>less</button>
+        <button className="btn">BUTTON</button>
+        <button className="btn">BUTTON</button>
       </header>
       <main className='wrap'>
-        <div  className='grid' style={{gridTemplateRows: `${string}`, gridTemplateColumns: `${string}` }}>
+        <div className='grid'>
           {array}
         </div>
       </main>
@@ -116,12 +97,12 @@ function App() {
       <section className='historyO'>
         <ul className="O">
           Stride of O player
-          {arrO.map((item) => <li key={v4()}  onClick={(e) => returnHistory(e)}>{item}</li>)}
+          {arrO.map((item) => <li key={v4()} onClick={(e) => returnHistory(e)}>{item}</li>)}
         </ul>
       </section>
       <footer> {winner ? <div>WINNER: {winner} </div> : null}</footer>
     </div>
-  )   
+  )
 }
 
 export default App   
