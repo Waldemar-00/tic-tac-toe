@@ -13,15 +13,17 @@ function App() {
 
   //! onSquareClick
   const onSquareClick = useCallback((i) => {
-    if (square[i]) return
-    isX ? setSquare(square => [...square, square[i] = 'X']) : setSquare(square => [...square, square[i] = 'O'])
+    //if (square[i]) return
+    const array = square.slice(0)
+    isX ? array[i] = 'X' : array[i] = 'O'
+    setSquare(array)
     setIsX(!isX)
   }, [isX, square]
   )
   //! handleArray
   const handleArray = useCallback(
-    (array = [...square]) => {
-      if(back.length > 0) array = [...back]
+    (array = square.slice()) => {
+      if(back.length > 0) array = back.slice()
       const arr = []
       for (let i = 0; i < 9; i++) {
         arr.push(<Square
@@ -49,7 +51,9 @@ function App() {
   }, [square])
   //!  makeHistory
   const makeHistory = useCallback(
-    (array = [...square]) => {
+    (array = square.slice()) => {
+      if(back.length > 0) array = back.slice()
+      console.log(array, 'makehistory')
       const arX = array.map((item, index) => {
         return item === 'X' ? `step to square - ${index + 1}` : null
       })
@@ -59,22 +63,23 @@ function App() {
       setArrO(arO)
       setArrX(arX)
       handleArray(array)
-    }, [handleArray, square]
+    }, [handleArray, square, back]
   )
   //! returnHistory
   const returnHistory = useCallback((e) => {
     const array = square.slice()
     const index = e.target.innerHTML.match(/\d/g).join('') //!id
     const ar = array.slice(0, index)
-    makeHistory([...ar, ...Array(9 - index).fill(null)])
-    setBack([...ar, ...Array(9 - index).fill(null)])
-  }, [square, makeHistory])
+    setBack(ar)
+    makeHistory(back)
+  }, [square, makeHistory, back])
   //! useEffect
   useEffect(() => {
     handleArray()
     calcWinner()
     makeHistory()
-  }, [handleArray, calcWinner, makeHistory ])
+    console.log('render', square, 'square')
+  }, [handleArray, calcWinner, makeHistory, square])
   //! RETURN
   return (
     <div className="App">

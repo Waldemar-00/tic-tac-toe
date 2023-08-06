@@ -2,14 +2,16 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'   
 import './index.css'   
 // import App from './App'  
-import AppShort from './AppShort'
-import reportWebVitals from './reportWebVitals'   
+// import AppShort from './AppShort'
+import reportWebVitals from './reportWebVitals'  
+import AppGame from './game/Game' 
 
 const root = ReactDOM.createRoot(document.getElementById('root'))   
 root.render(
   <React.StrictMode>
     {/* <App /> */}
-    <AppShort/>
+    {/* <AppShort/> */}
+    <AppGame />
   </React.StrictMode>
 )   
 

@@ -1,0 +1,97 @@
+.App {
+  text-align: center;
+  position: relative;
+}
+
+.App-header {
+  background-color: #282c34;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+/* .App-link { */
+  /* color: #61dafb; */
+/* } */
+.Game {
+  margin: 0 auto;
+  width: 1200px;
+  background-color: #282c34;
+}
+.fields {
+  width: 70px;
+  height: 70px;
+  border: 1px solid #fff;
+  background-color: #61dafb;
+  font-size: 48px;
+  font-weight: bold;
+  color: #535353;
+  text-align: center;
+  cursor: pointer;
+}
+
+/* .btn { */
+  /* display: block; */
+  /* width: 120px; */
+  /* height: 40px; */
+  /* background-color: #fff; */
+  /* border: none; */
+  /* font-size: 18px; */
+  /* line-height: 40px; */
+  /* text-align: center; */
+  /* margin-bottom: 15px; */
+  /* cursor: pointer; */
+/* } */
+/* .btn:last-child { */
+  /* margin-bottom: 30px; */
+/* } */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 70px) ;
+  grid-template-rows: repeat(3, 70px);
+  background-color: #282c34;
+  place-content: center;
+}
+.win, .next {
+  margin-bottom: 30px;
+  font-weight: bold;
+}
+.historyX {
+  position: absolute;
+  left: 38px;
+  top: 300px;
+  font-size: 24px;
+  font-weight: 500;
+}
+.historyO {
+  position: absolute;
+  right: 80px;
+  top: 300px;
+  font-size: 24px;
+  font-weight: 500;
+}
+.X, .O {
+  list-style: none;
+  text-align: right;
+}
+.O li {
+  margin-top: 10px;
+}
+.X li, .O li {
+  font-size: 18px;
+  color: #242424;
+  font-weight: 450;
+  cursor: pointer;
+}
+footer {
+  width: 1200px;
+  margin: 50px auto;
+  background-color: deepskyblue;
+  font-size: 48px;
+  font-weight: bold;
+  color: #242424;
+}
